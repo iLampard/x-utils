@@ -4,6 +4,8 @@
 
 
 import sys
+import StringIO
+import traceback
 
 PY3 = sys.version_info >= (3,)
 
@@ -37,3 +39,12 @@ def to_unicode(value):
             "Expected bytes, unicode, or None; got %r" % type(value)
         )
     return value.decode("utf-8")
+
+
+def get_error_message():
+    fp = StringIO.StringIO()  # 创建内存文件对象
+    traceback.print_exc(file=fp)
+    message = fp.getvalue()
+    return message
+
+

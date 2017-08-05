@@ -2,26 +2,43 @@
 
 
 import time
-import logging
-
-from . import __logger__
-
-logger = logging.getLogger(__logger__)
+import functools
 
 
-def timeit(func):
+def handle_exception(logger):
     """
-    https://github.com/vex1023/vxUtils/blob/master/vxUtils/decorator.py
-    @timeit
-    def test():
-        time.sleep(1)
+    :param logger: logging, a logging object
+    :return: decorator, wraps exception loggers
     """
 
-    def wrapper(*args, **kwargs):
-        _start = time.time()
-        retval = func(*args, **kwargs)
-        _end = time.time()
-        logger.info('function %s() used : %.6f s' % (func.__name__, _end - _start))
-        return retval
+    def decorator(query_func):
+        @functools.wraps(query_func)
+        def wrapper(*args, **kwargs):
+            try:
+                return query_func(*args, **kwargs)
+            except Exception as e:
+                logger.info('Exception in function {0} -- {1}'.format(query_func.__name__, e))
 
-    return wrapper
+        return wrapper
+
+    return decorator
+
+
+def clock(logger):
+    """
+    :param logger: logging, a logging object
+    :return: decorator, wraps time 
+    """
+
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            _start = time.time()
+            retval = func(*args, **kwargs)
+            _end = time.time()
+            logger.info('function {0} used : {1} s'.format(func.__name__, _end - _start))
+            return retval
+
+        return wrapper
+
+    return decorator
