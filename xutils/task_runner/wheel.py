@@ -20,7 +20,6 @@ class Wheel(object):
         Obj = getattr(module, 'TaskServer')
         Task = Obj()
         Task.task_name = task_name
-        Task.init_logger()
         Task.init_timer(kwargs)
         if self.tasks:
             maxid = max(self.tasks)
