@@ -7,7 +7,6 @@
 import time
 from .wheel import Wheel
 from ..custom_logger import CustomLogger
-from ..string_utils import get_error_message
 
 
 class TaskManager(object):
@@ -39,6 +38,3 @@ class TaskManager(object):
             time.sleep(10)
 
 
-if __name__ == "__main__":
-    TS = TaskManager()
-    TS.run()

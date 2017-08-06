@@ -11,9 +11,10 @@ import threading
 
 
 class Wheel(object):
-    def __init__(self, call_timeout=None):
+    def __init__(self, call_timeout=None, warn_call=True):
         # 超时警告回调方法
         self.call_timeout = call_timeout
+        self.warn_call = warn_call
         self.tasks = {}
 
     def add_task(self, module, task_name, **kwargs):
