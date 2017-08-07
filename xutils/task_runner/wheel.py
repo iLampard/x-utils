@@ -19,18 +19,18 @@ class Wheel(object):
 
     def add_task(self, module, task_name, **kwargs):
         Obj = getattr(module, 'TaskServer')
-        Task = Obj()
+        Task = Obj(**kwargs)
         Task.task_name = task_name
-        Task.init_timer(kwargs)
+        Task.init_timer(**kwargs)
         if self.tasks:
-            maxid = max(self.tasks)
+            max_id = max(self.tasks)
         else:
-            maxid = -1
-        self.tasks[maxid + 1] = Task
+            max_id = -1
+        self.tasks[max_id + 1] = Task
 
     def update_time(self, task_name, **kwargs):
-        for tasknum in self.tasks:
-            Task = self.tasks.get(tasknum)
+        for task_num in self.tasks:
+            Task = self.tasks.get(task_num)
             if Task.task_name == task_name:
                 Task.init_timer(kwargs)
 

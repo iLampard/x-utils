@@ -10,8 +10,8 @@ MONTH_LENGTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 
 class Timer(object):
-    def __init__(self):
-        self.logger = CustomLogger(log_level='info', log_file='timer.log')
+    def __init__(self, log_level, log_file):
+        self.logger = CustomLogger(log_level=log_level, log_file=log_file)
         self.running = False
         # 当self.stop == True 时，该任务不再执行
         self.stop = False
@@ -24,7 +24,7 @@ class Timer(object):
         self.runtime = 0
         self.start_time = 0
 
-    def init_timer(self, kwargs):
+    def init_timer(self, **kwargs):
         self.interval = kwargs.get('interval')
         self.date = kwargs.get('date')
         self.week = kwargs.get('week')
@@ -35,7 +35,7 @@ class Timer(object):
         self.timeout = kwargs.get('timeout')
         if self.timeout is None:
             self.timeout = 86400
-        self.cal_last_run_time()
+        self.calc_last_run_time()
 
     def calc_date_time(self):
         today_time = time.mktime(time.strptime(time.strftime('%Y-%m-%d'), '%Y-%m-%d'))
@@ -52,17 +52,17 @@ class Timer(object):
         return today_time + adddays * 86400 + self.hour * 3600 + self.minute * 60
 
     def calc_week_time(self):
-        todaytime = time.mktime(time.strptime(time.strftime('%Y-%m-%d'), '%Y-%m-%d'))
-        nowweek = int(time.strftime('%w'))
-        nowhour = int(time.strftime('%H'))
-        nowminute = int(time.strftime('%M'))
-        if self.week < nowweek and self.hour < nowhour:
-            adddays = 7 - (nowweek - self.week)
-        elif self.week == nowweek and self.hour < nowhour and self.minute < nowminute:
+        today_time = time.mktime(time.strptime(time.strftime('%Y-%m-%d'), '%Y-%m-%d'))
+        now_week = int(time.strftime('%w'))
+        now_hour = int(time.strftime('%H'))
+        now_minute = int(time.strftime('%M'))
+        if self.week < now_week and self.hour < now_hour:
+            adddays = 7 - (now_week - self.week)
+        elif self.week == now_week and self.hour < now_hour and self.minute < now_minute:
             adddays = 7
         else:
-            adddays = self.week - nowweek
-        return todaytime + adddays * 86400 + self.hour * 3600 + self.minute * 60
+            adddays = self.week - now_week
+        return today_time + adddays * 86400 + self.hour * 3600 + self.minute * 60
 
     def calc_hour_time(self):
         todaytime = time.mktime(time.strptime(time.strftime('%Y-%m-%d'), '%Y-%m-%d'))
