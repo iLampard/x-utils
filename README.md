@@ -3,7 +3,7 @@
 <table>
 <tr>
   <td>Latest Release</td>
-  <td><img src="https://img.shields.io/pypi/v/xutils.svg" alt="latest release" /></td>
+  <td><img src="https://img.shields.io/pypi/v/x-utils.svg" alt="latest release" /></td>
 </tr>
 </table>
 
