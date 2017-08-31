@@ -5,9 +5,9 @@ from setuptools import find_packages
 
 setup(
     name='x-utils',
-    version='0.1.0',
+    version='0.1.1',
     packages=find_packages(),
-    url='',
+    url='https://github.com/iLampard/x-utils',
     license='Apache-2.0',
     author='iLampard',
     author_email='',

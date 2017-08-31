@@ -7,3 +7,4 @@ LOGGER = CustomLogger(logger_name='TestLogger', log_level='info', log_file='test
 LOGGER.info('Hello world')
 LOGGER.set_level('critical')
 LOGGER.info('Hello world')
+
