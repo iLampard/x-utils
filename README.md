@@ -42,6 +42,28 @@ LOGGER.info('Hello world')
 
 ```
 
+##### clock
+*clock * 提供了方便的函数计时器功能
+
+```python
+from xutils.decorators import clock
+from xutils.custom_logger import CustomLogger
+
+LOGGER = CustomLogger(logger_name='TestLogger', log_level='info', log_file='clock.log')
+
+
+@clock(LOGGER)
+def test_calc():
+    sum = 0
+    for i in range(100000):
+        sum += i
+    return
+
+
+test_calc()
+>>>
+[2017-09-06 14:57:38 - TestLogger - INFO] - function test_calc used : 0.00600004196167 s
+```
 
 ##### TestRunner
 
