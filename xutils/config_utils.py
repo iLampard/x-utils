@@ -2,9 +2,33 @@
 
 import os
 import yaml
+import sys
 
 
-# ref : https://github.com/spotify/postgresql-metrics/blob/master/postgresql_metrics/common.py
+# ref: https://github.com/spotify/postgresql-metrics/blob/master/postgresql_metrics/common.py
+# ref: https://github.com/henriquebastos/python-decouple/blob/master/decouple.py
+
+def _caller_path():
+    # MAGIC! Get the caller's module path.
+    frame = sys._getframe()
+    path = os.path.dirname(frame.f_back.f_back.f_code.co_filename)
+    return path
+
+
+def find_file(target_file, search_path=None):
+    search_path = os.path.split(os.path.abspath(target_file))[0] if search_path is None else search_path
+    # look for all files in the current path
+    filename = os.path.join(search_path, target_file)
+    if os.path.isfile(filename):
+        return filename
+
+    # search the parent
+    parent = os.path.dirname(search_path)
+    if parent and parent != os.path.sep and os.path.split(parent)[-1] != '':
+        return find_file(target_file, parent)
+
+    # reached root without finding any files.
+    return ''
 
 
 def merge_configs(to_be_merged, default):
@@ -45,17 +69,15 @@ def merge_configs(to_be_merged, default):
     return to_be_merged
 
 
-def find_and_parse_config(config_path):
+def find_and_parse_config(config, default_config='default.yaml'):
     """Finds the service configuration file and parses it.
     Checks also a directory called default, to check for default configuration values,
     that will be overwritten by the actual configuration found on given path.
     """
-    config_filename = os.path.basename(config_path)
-    config_root = os.path.dirname(config_path)
-    default_root = os.path.join(config_root, 'default')
+    config_path = find_file(config)
+    default_path = find_file(default_config)
     config_dict = {}
-    for config_dir in (default_root, config_root):
-        current_path = os.path.join(config_dir, config_filename)
+    for current_path in (config_path, default_path):
         if os.path.isfile(current_path):
             with file(current_path, 'r') as f:
                 read_config_dict = yaml.load(f)
