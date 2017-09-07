@@ -10,5 +10,5 @@ class TaskServer(Timer):
         log_file = kwargs.get('log_file', __file__ + '.log')
         super(TaskServer, self).__init__(log_level, log_file)
 
-    def TaskServer(self):
-        print 'hello world'
+    # def TaskServer(self):
+    #     print('hello world')
