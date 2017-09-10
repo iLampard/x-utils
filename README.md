@@ -2,10 +2,18 @@
 
 <table>
 <tr>
+  <td>Python version</td>
+  <td><img src="https://img.shields.io/badge/python-2.7-blue.svg"/>   <img src="https://img.shields.io/badge/python-3.5-blue.svg"/></td>
+  </tr>
+
+<tr>
+<tr>
   <td>Latest Release</td>
   <td><img src="https://img.shields.io/pypi/v/x-utils.svg" alt="latest release" /></td>
 </tr>
 </table>
+
+
 
 一些常用的效用函数。
 
