@@ -51,7 +51,7 @@ LOGGER.info('Hello world')
 ```
 
 ##### clock
-*clock * 提供了方便的函数计时器功能
+*clock* 提供了方便的函数计时器功能
 
 ```python
 from xutils.decorators import clock
@@ -123,6 +123,33 @@ if __name__ == '__main__':
     test_exception()
 
 ```
+
+
+#### config utility
+*find_file* 根据给定开始搜索的地址，逐步往根目录回滚搜索目标文件
+
+```python
+
+# xutils/tests/test_config_utils.py
+find_path = find_file(target_file='config_utils.py')
+
+>>> 'xutils\\config_utils.py'
+
+
+```
+
+
+*find_and_parse_config* 的功能是读取给定yaml配置文件中的信息，如果有默认配置文件，那么将二者读取的信息合并（如果信息有重复，则以给定配置文件信息为准）。
+```python
+
+# xutils/tests/test_config_utils.py
+find_and_parse_config('config.yaml')
+
+>>> {'a': 1, 'b': 2, 'c': 3}
+
+
+```
+
 
 
 # 参考项目
