@@ -19,4 +19,4 @@ __all__ = ['LogFormatter',
            'find_file',
            'find_and_parse_config']
 
-__version__ = '0.1.6'
+__version__ = '0.1.7'
