@@ -9,6 +9,7 @@ from xutils.test_runner import (add_parent_path,
 from xutils.decorators import handle_exception
 from xutils.config_utils import (find_file,
                                  find_and_parse_config)
+from xutils.plot_utils import radar_factory
 
 __all__ = ['LogFormatter',
            'CustomLogger',
@@ -17,6 +18,7 @@ __all__ = ['LogFormatter',
            'TestRunner',
            'handle_exception',
            'find_file',
-           'find_and_parse_config']
+           'find_and_parse_config',
+           'radar_factory']
 
-__version__ = '0.1.7'
+__version__ = '0.1.8'
