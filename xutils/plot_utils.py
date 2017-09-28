@@ -4,7 +4,6 @@
 
 
 import numpy as np
-
 import matplotlib.pyplot as plt
 from matplotlib.path import Path
 from matplotlib.spines import Spine

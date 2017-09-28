@@ -3,6 +3,7 @@
 import os
 import yaml
 import sys
+from toolz import merge
 
 
 # ref: https://github.com/spotify/postgresql-metrics/blob/master/postgresql_metrics/common.py
@@ -74,12 +75,17 @@ def find_and_parse_config(config, default_config='default.yaml'):
     Checks also a directory called default, to check for default configuration values,
     that will be overwritten by the actual configuration found on given path.
     """
+
+    def load_config(path):
+        if os.path.isfile(path):
+            with open(path, 'r') as f:
+                config_dict = yaml.load(f)
+            return config_dict
+
     config_path = find_file(config)
     default_path = find_file(default_config)
-    config_dict = {}
-    for current_path in (config_path, default_path):
-        if os.path.isfile(current_path):
-            with open(current_path, 'r') as f:
-                read_config_dict = yaml.load(f)
-            config_dict = merge_configs(read_config_dict, config_dict)
+    config = load_config(config_path)
+    default_config = load_config(default_path)
+    config_dict = merge(default_config, config)
+
     return config_dict

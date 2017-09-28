@@ -21,4 +21,4 @@ __all__ = ['LogFormatter',
            'find_and_parse_config',
            'radar_factory']
 
-__version__ = '0.1.8'
+__version__ = '0.1.9'
