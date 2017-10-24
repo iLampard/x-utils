@@ -4,6 +4,8 @@
 
 
 import sys
+from itertools import product
+
 
 PY3 = sys.version_info >= (3,)
 
@@ -39,5 +41,9 @@ def to_unicode(value):
     return value.decode("utf-8")
 
 
+def combinations(list1, list2):
+    product_list = product(list1, list2)
+    ret = [''.join(i) for i in product_list]
+    return ret
 
 
