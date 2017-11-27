@@ -13,6 +13,8 @@ from xutils.config_utils import (find_file,
 from xutils.plot_utils import radar_factory
 from xutils.date_utils import is_within_hour_range
 from xutils.email_sender import send
+from xutils.assert_utils import (py_assert,
+                                 py_warning)
 
 __all__ = ['LogFormatter',
            'CustomLogger',
@@ -24,6 +26,8 @@ __all__ = ['LogFormatter',
            'find_file',
            'find_and_parse_config',
            'radar_factory',
-           'is_within_hour_range']
+           'is_within_hour_range',
+           'py_assert',
+           'py_warning']
 
 __version__ = '0.2.3'

@@ -19,5 +19,3 @@ def is_within_hour_range(ref_time, start_time, end_time):
         return True
     else:
         return False
-
-
