@@ -12,6 +12,7 @@ from xutils.config_utils import (find_file,
                                  find_and_parse_config)
 from xutils.plot_utils import radar_factory
 from xutils.date_utils import is_within_hour_range
+from xutils.email_sender import send
 
 __all__ = ['LogFormatter',
            'CustomLogger',
@@ -25,4 +26,4 @@ __all__ = ['LogFormatter',
            'radar_factory',
            'is_within_hour_range']
 
-__version__ = '0.2.2'
+__version__ = '0.2.3'
