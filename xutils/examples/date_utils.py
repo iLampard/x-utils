@@ -26,10 +26,6 @@ Date.strptime('20160115', '%Y%m%d')
 # Date对象的加减
 Date()
 
-
-
-
-
 # 设定为上交所的交易日历
 cal = Calendar('China.SSE')
 

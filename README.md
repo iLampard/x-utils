@@ -19,6 +19,18 @@
 
 * [如何安装](https://github.com/ilampard/x-utils/blob/master/README.md#如何安装)
 * [开始使用](https://github.com/ilampard/x-utils/blob/master/README.md#开始使用)
+    * 日期工具函数
+        * Date: 将datetime或者字符串格式的日期转换为*Date*类型，提供各种效用函数方便进行格式转换和日期加减、调整等
+        * Calendar: 预定义了上交所、银行间两个中国交易日历，可供日期加减、调整时使用
+        * Period: 可用字符串形式初始化*Period*对象，定义一个时间周期，传递给*Date／Calendar／Schedule* 对象使用
+        * Schedule：可结合*Date／Calendar／Period* 定义循环往复的日程表
+        上述四个类的对象可混合使用。
+    * 日志工具: CustomLogger
+    * 常用装饰器 
+        * 计时器： clock
+        * 异常处理: handle_exception
+        * 装饰器与日志的结合使用
+    * YAML配置文件的解析：find_and_parse_config 
 * [参考项目](https://github.com/ilampard/x-utils/blob/master/README.md#参考项目)
 
 
@@ -29,6 +41,76 @@ pip install x-utils
 ```
 
 # 开始使用
+##### Date Utilities
+
+###### Date
+```python
+
+from xutils.date_utils import Date
+
+# 生成Date对象
+current_date = Date(2015, 7, 24)
+
+# Date对象的字符串表示
+str(current_date)  
+>>>2015-07-24
+
+# 也可以直接传递5位数的序列号初始化Date对象
+current_date_2 = Date(serialNumber=current_date.serialNumber)
+str(current_date_2)  
+>>>2015-07-24
+
+# Date对象转换成datetime格式
+current_date.toDateTime()  
+>>>dt.datetime(2015, 7, 24)
+
+# 从字符串初始化成Date对象
+Date.parseISO('2016-01-15')
+Date.strptime('20160115', '%Y%m%d')
+>>>Date(2016, 1, 15)
+
+
+```
+
+
+###### Calendar / Period
+
+```python
+# 设定为上交所的交易日历
+cal = Calendar('China.SSE')
+
+# 假设某日为 2015-07-11(周六), 初始化一个Date对象
+current_date = Date(2015, 7, 11)
+
+# 判断该日是否是交易日、节假日、周末或者月末
+cal.isBizDay(current_date)  # False
+cal.isHoliday(current_date)  # True
+cal.isWeekEnd(current_date.weekday())  # True
+cal.isEndOfMonth(current_date)  # False
+
+# 交易日历下的日期加减
+
+# 默认 当计算返回值为非交易日时返回下一个交易日 bizDayConv = BizDayConventions.Following
+current_date = Date(2014, 1, 31)
+
+# 当前日往前推五个交易日
+cal.advanceDate(current_date, Period('-5b'))  
+>>>Date(2014, 1, 24)
+
+# 当前日往后推4个月
+cal.advanceDate(current_date, Period('4m')) 
+>>>Date(2014, 6, 3)
+
+
+# 日期的加减
+
+# 一个月后的日期
+current_date + '1M'
+current_date + Period('1M') # 与上一行结果相同
+
+
+```
+
 
 ##### CustomLogger
 
