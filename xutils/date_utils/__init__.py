@@ -1,21 +1,24 @@
 # -*- coding: utf-8 -*-
 
-from time import (mktime,
-                  strptime)
+from xutils.date_utils.date import Date
+from xutils.date_utils.period import Period
+from xutils.date_utils.calendar import Calendar
+from xutils.date_utils.schedule import Schedule
+from xutils.date_utils.misc import is_within_hour_range
+from xutils.date_utils.enums import (TimeUnits,
+                                     NormalizingType,
+                                     DateGeneration,
+                                     BizDayConventions,
+                                     Months,
+                                     Weekdays)
 
-
-def is_within_hour_range(ref_time, start_time, end_time):
-    """
-    :param ref_time: datetime/string, 需要判断的时间变量
-    :param start_time: string, 时间区间上限
-    :param end_time: string, 时间下限
-    :return: 判断某个时间是否在限定的时间范围内
-    """
-    str_ref_time = ref_time.strftime('%Y%m%d')
-    start_time_ = mktime(strptime(str_ref_time + '-' + start_time, '%Y%m%d-%H:%M'))
-    end_time_ = mktime(strptime(str_ref_time + '-' + end_time, '%Y%m%d-%H:%M'))
-    ref_time_ = mktime(ref_time.timetuple())
-    if start_time_ <= ref_time_ <= end_time_:
-        return True
-    else:
-        return False
+__all__ = ['Date',
+           'Period',
+           'Calendar',
+           'Schedule',
+           'is_within_hour_range',
+           'TimeUnits',
+           'NormalizingType',
+           'BizDayConventions',
+           'Months',
+           'Weekdays']

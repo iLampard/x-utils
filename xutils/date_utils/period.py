@@ -3,7 +3,6 @@
 from __future__ import division
 import re
 from math import floor
-from copy import deepcopy
 from xutils.date_utils.enums import TimeUnits
 from xutils.assert_utils import py_assert
 
