@@ -23,6 +23,7 @@ install:
     fi
   - conda install coverage
   - conda install toolz
+  - conda install numpy
   - pip install parameterized
   - pip install coveralls
 # command to run tests
