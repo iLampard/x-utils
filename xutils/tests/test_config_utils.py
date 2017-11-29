@@ -21,7 +21,6 @@ class TestConfigUtils(TestCase):
 
     def test_find_and_parse_config(self):
         config = find_and_parse_config('config.yaml')
-        print(config)
         self.assertDictEqual(config, {'a': 1, 'b': 2, 'c': 3})
 
     def test_find_file(self):

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 
-from xutils.date_utils import (Date,
-                               Period,
-                               Calendar,
-                               Schedule)
+from xutils import (Date,
+                    Period,
+                    Calendar,
+                    Schedule)
 
 # 生成Date对象
 current_date = Date(2015, 7, 24)

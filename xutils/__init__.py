@@ -15,6 +15,17 @@ from xutils.date_utils import is_within_hour_range
 from xutils.email_sender import send
 from xutils.assert_utils import (py_assert,
                                  py_warning)
+from xutils.date_utils import (Date,
+                               Period,
+                               Calendar,
+                               Schedule,
+                               is_within_hour_range,
+                               TimeUnits,
+                               NormalizingType,
+                               DateGeneration,
+                               BizDayConventions,
+                               Months,
+                               Weekdays)
 
 __all__ = ['LogFormatter',
            'CustomLogger',
@@ -28,6 +39,17 @@ __all__ = ['LogFormatter',
            'radar_factory',
            'is_within_hour_range',
            'py_assert',
-           'py_warning']
+           'py_warning',
+           'Date',
+           'Period',
+           'Calendar',
+           'Schedule',
+           'is_within_hour_range',
+           'TimeUnits',
+           'NormalizingType',
+           'BizDayConventions',
+           'Months',
+           'Weekdays'
+           ]
 
 __version__ = '0.3.0'

@@ -19,13 +19,14 @@
 
 * [如何安装](https://github.com/ilampard/x-utils/blob/master/README.md#如何安装)
 * [开始使用](https://github.com/ilampard/x-utils/blob/master/README.md#开始使用)
-    * 日期工具函数
+    * 日期工具函数(该部分参考了[finance-python](https://github.com/alpha-miner/Finance-Python))
         * Date: 将datetime或者字符串格式的日期转换为*Date*类型，提供各种效用函数方便进行格式转换和日期加减、调整等
         * Calendar: 预定义了上交所、银行间两个中国交易日历，可供日期加减、调整时使用
         * Period: 可用字符串形式初始化*Period*对象，定义一个时间周期，传递给*Date／Calendar／Schedule* 对象使用
         * Schedule：可结合*Date／Calendar／Period* 定义循环往复的日程表
         上述四个类的对象可混合使用。
     * 日志工具: CustomLogger
+    * 单元测试合集：TestRunner(参考了[simpleutils](https://github.com/wegamekinglc/simpleutils)) 
     * 常用装饰器 
         * 计时器： clock
         * 异常处理: handle_exception
@@ -46,7 +47,8 @@ pip install x-utils
 ###### Date
 ```python
 
-from xutils.date_utils import Date
+from xutils import (Date,
+                    Period)
 
 # 生成Date对象
 current_date = Date(2015, 7, 24)
@@ -69,6 +71,10 @@ Date.parseISO('2016-01-15')
 Date.strptime('20160115', '%Y%m%d')
 >>>Date(2016, 1, 15)
 
+# 日期的加减 (不考虑交易日的情况)
+# 一个月后的日期
+current_date + '1M'
+current_date + Period('1M') # 与上一行结果相同
 
 ```
 
@@ -76,6 +82,11 @@ Date.strptime('20160115', '%Y%m%d')
 ###### Calendar / Period
 
 ```python
+
+from xutils import (Date, 
+                    Calendar,
+                    Period)
+
 # 设定为上交所的交易日历
 cal = Calendar('China.SSE')
 
@@ -102,12 +113,30 @@ cal.advanceDate(current_date, Period('4m'))
 >>>Date(2014, 6, 3)
 
 
-# 日期的加减
+```
 
-# 一个月后的日期
-current_date + '1M'
-current_date + Period('1M') # 与上一行结果相同
+###### Schedule
 
+```python
+
+from xutils import (Date, 
+                    Period,
+                    Calendar,
+                    Schedule,
+                    TimeUnits,
+                    BizDayConventions)
+
+# Jan 2 and Jan 3 are skipped as New Year holiday
+# Jan 7 is skipped as weekend
+# Jan 8 is adjusted to Jan 9 with following convention
+start_date = Date(2012, 1, 1)
+s = Schedule(start_date,
+             start_date + 7,
+             Period(length=1, units=TimeUnits.Days),
+             Calendar('China.SSE'),
+             BizDayConventions.Preceding)
+>>>
+[Date(2011, 12, 30), Date(2012, 1, 4), Date(2012, 1, 5), Date(2012, 1, 6), Date(2012, 1, 9)]
 
 ```
 
@@ -239,3 +268,5 @@ find_and_parse_config('config.yaml')
 [TimerTask](https://github.com/mudou192/TimerTask)
 
 [simpleutils](https://github.com/wegamekinglc/simpleutils)
+
+[finance-python](https://github.com/alpha-miner/Finance-Python)
