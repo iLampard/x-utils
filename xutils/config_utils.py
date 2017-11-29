@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import os
-import yaml
+try:
+    import yaml
+except ImportError:
+    pass
 import sys
 from toolz import merge
 
