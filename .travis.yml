@@ -22,10 +22,8 @@ install:
     fi
   - conda install coverage
   - conda install numpy
-  - conda install scipy
   - conda install pandas
   - conda install toolz
-  - pip install mock
   - pip install parameterized
   - pip install coveralls
 # command to run tests
