@@ -9,10 +9,10 @@ from xutils.test_runner import (add_parent_path,
                                 TestRunner)
 from xutils.decorators import handle_exception
 from xutils.config_utils import (find_file,
-                                 find_and_parse_config)
+                                 find_and_parse_config,
+                                 add_parent_path)
 from xutils.plot_utils import radar_factory
 from xutils.date_utils import is_within_hour_range
-from xutils.email_sender import send
 from xutils.assert_utils import (py_assert,
                                  py_warning)
 from xutils.date_utils import (Date,
@@ -36,6 +36,7 @@ __all__ = ['LogFormatter',
            'handle_exception',
            'find_file',
            'find_and_parse_config',
+           'add_parent_path',
            'radar_factory',
            'is_within_hour_range',
            'py_assert',
@@ -52,4 +53,4 @@ __all__ = ['LogFormatter',
            'Weekdays'
            ]
 
-__version__ = '0.3.0'
+__version__ = '0.3.1'

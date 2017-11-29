@@ -96,3 +96,8 @@ def find_and_parse_config(config, default_config='default.yaml'):
         config_dict = merge(default_config, config)
 
     return config_dict
+
+
+def add_parent_path(name, level):
+    current_path = os.path.abspath(name)
+    sys.path.append(os.path.sep.join(current_path.split(os.path.sep)[:-level]))
