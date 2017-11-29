@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from xutils import (CustomLogger,
-                    TestRunner)
+from xutils.custom_logger import CustomLogger
+from xutils.test_runner import TestRunner
 from xutils.tests.test_assert import TestAssert
 from xutils.tests.test_date import TestDate
 from xutils.tests.test_calendar import TestCalendar
