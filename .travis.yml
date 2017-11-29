@@ -24,6 +24,7 @@ install:
   - conda install coverage
   - conda install toolz
   - conda install numpy
+  - conda install matplotlib
   - pip install parameterized
   - pip install coveralls
 # command to run tests
