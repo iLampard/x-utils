@@ -21,8 +21,6 @@ install:
       conda install enum34;
     fi
   - conda install coverage
-  - conda install numpy
-  - conda install pandas
   - conda install toolz
   - pip install parameterized
   - pip install coveralls
