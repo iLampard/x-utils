@@ -410,7 +410,24 @@ sse_holDays = {Date(2005, 1, 3),
                Date(2017, 10, 3),
                Date(2017, 10, 4),
                Date(2017, 10, 5),
-               Date(2017, 10, 6)}
+               Date(2017, 10, 6),
+               Date(2018, 1, 1),
+               Date(2018, 2, 15),
+               Date(2018, 2, 16),
+               Date(2018, 2, 19),
+               Date(2018, 2, 20),
+               Date(2018, 2, 21),
+               Date(2018, 4, 5),
+               Date(2018, 4, 6),
+               Date(2018, 4, 30),
+               Date(2018, 5, 1),
+               Date(2018, 6, 18),
+               Date(2018, 9, 24),
+               Date(2018, 10, 1),
+               Date(2018, 10, 2),
+               Date(2018, 10, 3),
+               Date(2018, 10, 4),
+               Date(2018, 10, 5)}
 
 
 class ChinaSseImpl(CalendarImpl):
@@ -528,6 +545,13 @@ ib_working_weekends = {
     Date.westernStyle(1, Months.April, 2017),
     Date.westernStyle(27, Months.May, 2017),
     Date.westernStyle(30, Months.September, 2017),
+    # 2018
+    Date.westernStyle(11, Months.February, 2018),
+    Date.westernStyle(24, Months.February, 2018),
+    Date.westernStyle(8, Months.April, 2018),
+    Date.westernStyle(28, Months.April, 2018),
+    Date.westernStyle(29, Months.September, 2018),
+    Date.westernStyle(30, Months.September, 2018),
 }
 
 _sseImpl = ChinaSseImpl()
