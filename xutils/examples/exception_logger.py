@@ -12,6 +12,17 @@ def test_exception():
     raise ValueError('Error here blabla')
 
 
+@handle_exception(logger=LOGGER,
+                  subject=u"[更新失败！！]",
+                  sender='xxxx',
+                  username='xxxx',
+                  password='000',
+                  host='mail.xxx.com',
+                  receiver=['XXXX@qq.com'])
+def test_exception_with_email():
+    raise ValueError('Error here blabla')
+
+
 if __name__ == '__main__':
-    test_exception()
+    test_exception_with_email()
 

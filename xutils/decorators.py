@@ -18,19 +18,7 @@ def _send(subject, text, sender, username, password, host, receiver):
     smtp.quit()
 
 
-def _email_params(**kwargs):
-    subject = kwargs.get('subject', None)
-    text = kwargs.get('text', None)
-    sender = kwargs.get('sender', None)
-    username = kwargs.get('username', None)
-    password = kwargs.get('password', None)
-    host = kwargs.get('host', None)
-    receiver = kwargs.get('receiver', None)
-    return {'subject': subject, 'text': text, 'sender': sender, 'username': username, 'password': password,
-            'host': host, 'receiver': receiver}
-
-
-def handle_exception(logger, **email_params):
+def handle_exception(logger, **kw_decorator):
     """
     :param logger: logging, a logging object
     :return: decorator, wraps exception loggers
@@ -43,18 +31,17 @@ def handle_exception(logger, **email_params):
                 return query_func(*args, **kwargs)
             except Exception as e:
                 logger.info('Exception in function {0} -- {1}'.format(query_func.__name__, e))
-                params = _email_params(**email_params)
-                if params['subject'] is not None:
+                if kw_decorator['subject'] is not None:
                     logger.info('Now is sending the email with exception message')
                     t = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
                     msg = t + ' ' + 'Exception in function {0} -- {1}'.format(query_func.__name__, e)
-                    _send(subject=params['subject'],
+                    _send(subject=kw_decorator['subject'],
                           text=msg,
-                          sender=params['sender'],
-                          username=params['username'],
-                          password=params['password'],
-                          host=params['host'],
-                          receiver=params['receiver'])
+                          sender=kw_decorator['sender'],
+                          username=kw_decorator['username'],
+                          password=kw_decorator['password'],
+                          host=kw_decorator['host'],
+                          receiver=kw_decorator['receiver'])
                     logger.info('Email is sent')
 
         return wrapper
