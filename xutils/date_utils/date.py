@@ -20,9 +20,9 @@ def _month_offset(month, is_leap):
 
 def _advance(date, n, units):
     if units == TimeUnits.Days or units == TimeUnits.BDays:
-        return Date(serialNumber=date.__serialNumber__ + n)
+        return Date(serial_number=date.__serialNumber__ + n)
     elif units == TimeUnits.Weeks:
-        return Date(serialNumber=date.__serialNumber__ + 7 * n)
+        return Date(serial_number=date.__serialNumber__ + 7 * n)
     elif units == TimeUnits.Months:
         d = date._day
         m = date._month + n
@@ -58,16 +58,16 @@ def _advance(date, n, units):
 
 
 class Date(object):
-    def __init__(self, year=None, month=None, day=None, serialNumber=None):
+    def __init__(self, year=None, month=None, day=None, serial_number=None):
         # do the input validation
-        if serialNumber:
-            self.__serialNumber__ = serialNumber
+        if serial_number:
+            self.__serialNumber__ = serial_number
 
-            y = (int(serialNumber / 365)) + 1900
-            if serialNumber <= _YearOffset[y - 1900]:
+            y = (int(serial_number / 365)) + 1900
+            if serial_number <= _YearOffset[y - 1900]:
                 y -= 1
 
-            d = serialNumber - _YearOffset[y - 1900]
+            d = serial_number - _YearOffset[y - 1900]
             m = int(d / 30) + 1
             leap = Date.isLeap(y)
             while d <= _month_offset(m, leap):
@@ -78,7 +78,7 @@ class Date(object):
             self._month = m
             self._day = d - _month_offset(m, leap)
             return
-        elif serialNumber and (year or month or day):
+        elif serial_number and (year or month or day):
             raise ValueError("When serial number is offered, no year or month or day number should be entered")
         elif not (year and month and day):
             raise ValueError("year: {0}, month: {1}, day: {2} can't be null value included".format(year, month, day))
@@ -130,7 +130,7 @@ class Date(object):
         if isinstance(period, Period):
             return _advance(self, period.length, period.units)
         elif isinstance(period, int):
-            return Date(serialNumber=self.__serialNumber__ + period)
+            return Date(serial_number=self.__serialNumber__ + period)
         else:
             period = Period(period)
             return _advance(self, period.length, period.units)
@@ -139,7 +139,7 @@ class Date(object):
         if isinstance(period, Period):
             return _advance(self, -period.length, period.units)
         elif isinstance(period, int):
-            return Date(serialNumber=self.__serialNumber__ - period)
+            return Date(serial_number=self.__serialNumber__ - period)
         elif isinstance(period, Date):
             return self.__serialNumber__ - period.__serialNumber__
         else:
@@ -205,21 +205,25 @@ class Date(object):
         return _YearIsLeap[year - 1900]
 
     @staticmethod
-    def fromExcelSerialNumber(serialNumber):
-        return Date(serialNumber=serialNumber)
+    def fromExcelSerialNumber(serial_number):
+        return Date(serial_number=serial_number)
 
     @staticmethod
-    def fromDateTime(dateTime):
-        return Date(dateTime.year, dateTime.month, dateTime.day)
+    def fromDateTime(date_time):
+        return Date(date_time.year, date_time.month, date_time.day)
 
     @staticmethod
-    def parseISO(dateStr):
-        return Date(int(dateStr[0:4]), int(dateStr[5:7]), int(dateStr[8:10]))
+    def parseISO(date_str):
+        return Date(int(date_str[0:4]), int(date_str[5:7]), int(date_str[8:10]))
 
     @staticmethod
     def strptime(date_str, date_format='%Y-%m-%d'):
         pydt = dt.datetime.strptime(date_str, date_format)
         return Date(pydt.year, pydt.month, pydt.day)
+
+    def strftime(self, date_format='%Y-%m-%d'):
+        date_time = self.toDateTime()
+        return date_time.strftime(date_format)
 
     @staticmethod
     def westernStyle(day, month, year):

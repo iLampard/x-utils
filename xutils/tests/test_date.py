@@ -12,23 +12,23 @@ from xutils.date_utils import Weekdays
 
 
 class TestDate(unittest.TestCase):
-    def testDateInputWithSerialNumber(self):
+    def test_DateInputWithSerialNumber(self):
         serial_number = 45678
-        test_date = Date(serialNumber=serial_number)
+        test_date = Date(serial_number=serial_number)
         self.assertEqual(test_date.serialNumber, serial_number)
 
-    def testDateInputWithSerialNumberAndNotNullYearMonthDay(self):
+    def test_DateInputWithSerialNumberAndNotNullYearMonthDay(self):
         serial_number = 45678
-        _ = Date(year=2015, serialNumber=serial_number)
+        _ = Date(year=2015, serial_number=serial_number)
 
-    def testDateInputWithoutCompleteInformationOnYearMonthDay(self):
+    def test_DateInputWithoutCompleteInformationOnYearMonthDay(self):
         year = 2015
         month = None
         day = 18
         with self.assertRaises(ValueError):
             _ = Date(year=year, month=month, day=day)
 
-    def testBasicFunctions(self):
+    def test_BasicFunctions(self):
         year = 2015
         month = 7
         day = 24
@@ -70,7 +70,7 @@ class TestDate(unittest.TestCase):
             dt.datetime(year, month, day), test_date.toDateTime()))
 
         serial_number = test_date.serialNumber
-        serial_date = Date(serialNumber=serial_number)
+        serial_date = Date(serial_number=serial_number)
 
         self.assertEqual(serial_date, test_date, "date excel serial number representation\n"
                                                  "expected:   {0:d}"
@@ -157,7 +157,7 @@ class TestDate(unittest.TestCase):
                                                            "expected:   {0}\n"
                                                            "calculated: {1}".format(expected_date, five_months_after))
 
-    def testDateAdvanceOutOfBounds(self):
+    def test_DateAdvanceOutOfBounds(self):
         test_date = Date(2199, 12, 30)
         with self.assertRaises(ValueError):
             _ = test_date + '1w'
@@ -166,7 +166,7 @@ class TestDate(unittest.TestCase):
         with self.assertRaises(ValueError):
             _ = test_date - '1w'
 
-    def testConsistency(self):
+    def test_Consistency(self):
         min_date = Date.minDate().serialNumber + 1
         max_date = Date.maxDate().serialNumber
 
@@ -251,7 +251,7 @@ class TestDate(unittest.TestCase):
                                          "    cloned date:   {2}\n"
                                          "    serial number: {3:d}".format(t, i, s, serial))
 
-    def testIsoDate(self):
+    def test_IsoDate(self):
         input_date = "2006-01-15"
         date_ = Date.parseISO(input_date)
         flag = date_.dayOfMonth() == 15 and date_.month() == 1 and date_.year() == 2006
@@ -263,7 +263,7 @@ class TestDate(unittest.TestCase):
                               " year:          {3:d}".format(input_date, date_.dayOfMonth(), date_.month(),
                                                              date_.year()))
 
-    def testParseDates(self):
+    def test_ParseDates(self):
         input_date = "2006-01-15"
         d = Date.strptime(input_date, "%Y-%m-%d")
         flag = d == Date(2006, 1, 15)
@@ -295,13 +295,13 @@ class TestDate(unittest.TestCase):
                               " input date:    {0:s}\n"
                               " parsed:        {1}".format(input_date, d))
 
-    def testDateDeepCopy(self):
+    def test_DateDeepCopy(self):
         benchmark_date = Date(2016, 1, 2)
         copied_date = copy.deepcopy(benchmark_date)
 
         self.assertEqual(benchmark_date, copied_date)
 
-    def testDatePickle(self):
+    def test_DatePickle(self):
         benchmark_date = Date(2016, 1, 2)
 
         f = tempfile.NamedTemporaryFile('w+b', delete=False)
@@ -313,3 +313,28 @@ class TestDate(unittest.TestCase):
             self.assertEqual(benchmark_date, pickled_date)
 
         os.unlink(f.name)
+
+    def test_strftime(self):
+        input_date = Date(2006, 1, 15)
+        d = input_date.strftime("%Y-%m-%d")
+        flag = d == "2006-01-15"
+
+        self.assertTrue(flag, "strftime failed\n"
+                              " input date:    {0}\n"
+                              " expected:        {1}".format(input_date, d))
+
+        input_date = Date(2012, 12, 2)
+        d = input_date.strftime("%m/%d/%Y")
+        flag = d == "12/02/2012"
+
+        self.assertTrue(flag, "strftime failed\n"
+                              " input date:    {0}\n"
+                              " expected:        {1}".format(input_date, d))
+
+        input_date = Date(2012, 12, 2)
+        d = input_date.strftime("%Y%m%d")
+        flag = d == "20121202"
+
+        self.assertTrue(flag, "strftime failed\n"
+                              " input date:    {0}\n"
+                              " expected:        {1}".format(input_date, d))
