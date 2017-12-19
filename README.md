@@ -68,9 +68,13 @@ current_date_2 = Date(serialNumber=current_date.serialNumber)
 str(current_date_2)  
 >>>'2015-07-24'
 
-# Date对象转换成datetime格式
+# Date对象转换成datetime对象
 current_date.toDateTime()  
 >>>dt.datetime(2015, 7, 24)
+
+# datetime对象转换成Date对象
+current_date = Date.fromDatetime(dt.datetime(2015, 7, 24))
+>>>Date(2015, 7, 24)
 
 # Date对象转换成制定格式的str格式
 current_date.strftime("%Y/%m/%d") 
@@ -87,6 +91,10 @@ Date.strptime('20160115', '%Y%m%d')
 # 一个月后的日期
 current_date + '1M'
 current_date + Period('1M') # 与上一行结果相同
+
+# 月底日期（不考虑交易日的情况）
+Date.endOfMonth(current_date)
+>>>Date(2016, 1, 31)
 
 ```
 
