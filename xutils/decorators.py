@@ -7,7 +7,7 @@ import smtplib
 from email.mime.text import MIMEText
 
 
-def _send(*args, **kwargs):
+def _send(**kwargs):
 
     subject = kwargs.get('subject')
     email_dict = kwargs.get('email_dict')
