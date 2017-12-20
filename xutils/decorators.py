@@ -53,13 +53,15 @@ def handle_exception(logger, **kw_decorator):
                     logger.info('Now is sending the email with exception message')
                     t = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
                     msg = t + ' ' + 'Exception in function {0} -- {1}'.format(query_func.__name__, e)
-                    _send(subject=kw_decorator['subject'],
-                          text=msg,
-                          sender=kw_decorator['sender'],
-                          username=kw_decorator['username'],
-                          password=kw_decorator['password'],
-                          host=kw_decorator['host'],
-                          receiver=kw_decorator['receiver'])
+                    email_dict = kw_decorator.get('email_dict')
+                    if email_dict is not None:  # 用 email_dict 中的内容
+                        pass
+                    else:
+                        email_dict = kw_decorator
+
+                    email_dict['text'] = msg
+                    _send(subject=subject, email_dict=email_dict)
+
                     logger.info('Email is sent')
 
         return wrapper
