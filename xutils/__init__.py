@@ -24,6 +24,7 @@ from xutils.date_utils import (Date,
                                BizDayConventions,
                                Months,
                                Weekdays)
+from xutils.misc import valid_dict
 
 __all__ = ['LogFormatter',
            'CustomLogger',
@@ -47,6 +48,9 @@ __all__ = ['LogFormatter',
            'BizDayConventions',
            'Months',
            'Weekdays'
-           ]
+           'valid_dict']
 
-__version__ = '0.3.7'
+__version__ = '0.3.8'
+
+
+

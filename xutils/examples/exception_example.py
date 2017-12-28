@@ -24,4 +24,4 @@ def test_exception_with_email():
 
 
 if __name__ == '__main__':
-    test_exception()
+    test_exception_with_email()
