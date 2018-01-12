@@ -11,6 +11,10 @@ from xutils.date_utils.enums import (TimeUnits,
                                      BizDayConventions,
                                      Months,
                                      Weekdays)
+from xutils.date_utils.convert import (DatetimeConverter,
+                                       datetime_is_naive,
+                                       localize)
+
 
 __all__ = ['Date',
            'Period',
@@ -21,4 +25,7 @@ __all__ = ['Date',
            'NormalizingType',
            'BizDayConventions',
            'Months',
-           'Weekdays']
+           'Weekdays',
+           'DatetimeConverter',
+           'datetime_is_naive',
+           'localize']

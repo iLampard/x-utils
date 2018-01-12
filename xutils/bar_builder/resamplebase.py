@@ -3,9 +3,11 @@
 
 import abc
 import six
-import datetime as dt
 from argcheck import *
 from xutils.bar_builder.bar import BarFrequency
+from xutils.date_utils import DatetimeConverter
+from xutils.date_utils import (localize,
+                               datetime_is_naive)
 
 
 @six.add_metaclass(abc.ABCMeta)
@@ -29,10 +31,10 @@ class IntraDayRange(TimeRange):
     @expect_bounded(frequency=(1, BarFrequency.DAY))
     def __init__(self, date_time, frequency):
         super(IntraDayRange, self).__init__()
-        ts = int(dt.datetime_to_timestamp(date_time))
+        ts = int(DatetimeConverter.datetime_to_timestamp(date_time))
         slot = int(ts / frequency)
-        slotTs = slot * frequency
-        self.begin = dt.timestamp_to_datetime(slotTs, not dt.datetime_is_naive(date_time))
-        if not dt.datetime_is_naive(date_time):
-            self.begin = dt.localize(self.__begin, date_time.tzinfo)
+        slot_ts = slot * frequency
+        self.begin = DatetimeConverter.timestamp_to_datetime(slot_ts, not datetime_is_naive(date_time))
+        if not datetime_is_naive(date_time):
+            self.begin = localize(self.__begin, date_time.tzinfo)
         self.end = self.begin + date_time.timedelta(seconds=frequency)
