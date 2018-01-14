@@ -58,7 +58,7 @@ class PollingThread(Thread):
 
         self._stopped = False
 
-    def __wait(self):
+    def _wait(self):
         for ticker in self.tickers:
             self.tick_dict[ticker].reset()
 
@@ -67,5 +67,15 @@ class PollingThread(Thread):
 
     def do_call(self):
         raise NotImplementedError
+
+    def run(self):
+        while not self._stopped:
+            self._wait()
+            if not self._stopped:
+                self.do_call()
+
+
+
+
 
 

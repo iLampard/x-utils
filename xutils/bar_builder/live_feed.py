@@ -2,14 +2,18 @@
 
 from Queue import (Empty,
                    Queue)
+from argcheck import *
 
 
 class LiveFeed(object):
-    def __init__(self, tickers, frequency, thread, inquery_period):
+    @expect_types(tickers=list)
+    def __init__(self, tickers, frequency, thread, inquery_period, on_bar_event):
         self.tickers = tickers
+        self.frequency = frequency
         self.thread = thread
         self.queue = Queue()
         self.inquery_period = inquery_period
+        self.on_bar_event = on_bar_event
 
     def start(self):
         if self.thread.is_alive():
@@ -32,8 +36,8 @@ class LiveFeed(object):
     def get_next_bar(self):
         ret = None
         try:
-            event_type, event_data = self.queue.get(True, self.inquery_period)
-            if event_type == 1:
+            event_type, event_data = self.queue.get(block=True, timeout=self.inquery_period)
+            if event_type == self.on_bar_event:
                 ret = event_data
             else:
                 raise ValueError('Invalid event received: {0} - {1}'.format(event_type, event_data))
