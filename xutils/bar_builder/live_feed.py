@@ -40,7 +40,7 @@ class LiveFeed(object):
             if event_type == self.on_bar_event:
                 ret = event_data
             else:
-                raise ValueError('Invalid event received: {0} - {1}'.format(event_type, event_data))
+                raise Exception('Invalid event received: {0} - {1}'.format(event_type, event_data))
         except Empty:
             pass
 

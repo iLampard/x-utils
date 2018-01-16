@@ -4,7 +4,10 @@ from xutils.bar_builder.bar import (BasicBar,
                                     BarFrequency)
 
 
-def build_bar(trade_date, price, volume_, amount_):
+def build_bar(trade_date, market_series):
+    price = market_series.price
+    volume_ = market_series.volume
+    amount_ = market_series.amount
     open_ = float(price[0])
     high = float(max(price))
     low = float(min(price))

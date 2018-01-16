@@ -13,7 +13,8 @@ from xutils.date_utils.enums import (TimeUnits,
                                      Weekdays)
 from xutils.date_utils.convert import (DatetimeConverter,
                                        datetime_is_naive,
-                                       localize)
+                                       localize,
+                                       as_utc)
 
 
 __all__ = ['Date',
@@ -28,4 +29,5 @@ __all__ = ['Date',
            'Weekdays',
            'DatetimeConverter',
            'datetime_is_naive',
-           'localize']
+           'localize',
+           'as_utc']
