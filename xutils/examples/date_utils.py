@@ -13,7 +13,7 @@ current_date = Date(2015, 7, 24)
 str(current_date)  # 2015-07-24
 
 # 也可以直接传递5位数的序列号初始化Date对象
-current_date_2 = Date(serialNumber=current_date.serialNumber)
+current_date_2 = Date(serial_number=current_date.serialNumber)
 str(current_date_2)  # 2015-07-24
 
 # Date对象转换成datetime格式

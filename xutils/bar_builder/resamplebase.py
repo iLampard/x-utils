@@ -37,8 +37,8 @@ class IntraDayRange(TimeRange):
         slot_ts = slot * frequency
         self.begin = DatetimeConverter.timestamp_to_datetime(slot_ts, not datetime_is_naive(date_time))
         if not datetime_is_naive(date_time):
-            self.begin = localize(self.__begin, date_time.tzinfo)
-        self.end = self.begin + date_time.timedelta(seconds=frequency)
+            self.begin = localize(self.begin, date_time.tzinfo)
+        self.end = self.begin + timedelta(seconds=frequency)
 
     def belongs(self, date_time):
         return self.end > date_time >= self.begin

@@ -109,6 +109,12 @@ class PollingThread(Thread):
     def _update_next_bar_close(self):
         raise NotImplementedError
 
+    def stop(self):
+        self._stopped = True
+
+    def stopped(self):
+        return self._stopped
+
 
 class BarThread(PollingThread):
     def __init__(self, tickers, inquery_period, frequency, queue, live_quote_arg_func, **kwargs):
@@ -117,6 +123,7 @@ class BarThread(PollingThread):
         self.frequency = frequency
         self.next_bar_close = None
         self.on_bar_event = kwargs.get('on_bar_event', 1)
+        self._update_next_bar_close()
 
     def _update_next_bar_close(self):
         self.next_bar_close = build_range(utcnow(), self.frequency).ending
