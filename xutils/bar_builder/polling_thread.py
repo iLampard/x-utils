@@ -137,7 +137,7 @@ class BarThread(PollingThread):
         bar_dict = {}
 
         for ticker in self.tickers:
-            if not self.ticker_dict[ticker].empty():
+            if not self.ticker_dict[ticker].is_empty():
                 bar_dict[ticker] = build_bar(end_time, self.ticker_dict[ticker])
 
         if len(bar_dict):
