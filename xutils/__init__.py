@@ -25,6 +25,9 @@ from xutils.date_utils import (Date,
                                Months,
                                Weekdays)
 from xutils.misc import valid_dict
+from xutils.bar_builder import (BarThread,
+                                BarFrequency,
+                                LiveFeed)
 
 __all__ = ['LogFormatter',
            'CustomLogger',
@@ -48,9 +51,10 @@ __all__ = ['LogFormatter',
            'BizDayConventions',
            'Months',
            'Weekdays'
-           'valid_dict']
+           'valid_dict',
+           'BarThread',
+           'BarFrequency',
+           'LiveFeed'
+           ]
 
-__version__ = '0.3.8'
-
-
-
+__version__ = '0.3.9'

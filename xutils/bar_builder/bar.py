@@ -25,19 +25,6 @@ class BarFrequency(object):
 
 
 class BasicBar(object):
-    # Optimization to reduce memory footprint.
-    __slots__ = (
-        'trade_date',
-        'open',
-        'close',
-        'high',
-        'low',
-        'volume',
-        'amount',
-        'frequency',
-        'extra',
-    )
-
     def __init__(self, trade_date, open_, high, low, close, volume, amount, frequency, extra={}):
         if high < low:
             raise Exception("high < low on %s" % trade_date)
@@ -51,54 +38,74 @@ class BasicBar(object):
             raise Exception("low > close on %s" % trade_date)
 
         self.trade_date = trade_date
-        self.open = open_
-        self.close = close
-        self.high = high
-        self.low = low
-        self.volume = volume
-        self.amount = amount
-        self.frequency = frequency
-        self.extra = extra
+        self._open = open_
+        self._close = close
+        self._high = high
+        self._low = low
+        self._volume = volume
+        self._amount = amount
+        self._frequency = frequency
+        self._extra = extra
 
     def __setstate__(self, state):
         (self.trade_date,
-         self.open,
-         self.close,
-         self.high,
-         self.low,
-         self.volume,
-         self.amount,
-         self.frequency,
-         self.extra) = state
+         self._open,
+         self._close,
+         self._high,
+         self._low,
+         self._volume,
+         self._amount,
+         self._frequency,
+         self._extra) = state
 
     def __getstate__(self):
         return (
             self.trade_date,
-            self.open,
-            self.close,
-            self.high,
-            self.low,
-            self.volume,
-            self.amount,
-            self.frequency,
-            self.extra
+            self._open,
+            self._close,
+            self._high,
+            self._low,
+            self._volume,
+            self._amount,
+            self._frequency,
+            self._extra
         )
 
     @property
-    def datetime(self):
+    def date_time(self):
         return self.trade_date
 
     @property
     def freq(self):
-        return self.frequency
+        return self._frequency
 
     @property
     def price(self):
-        return self.close
+        return self._close
+
+    @property
+    def open(self):
+        return self._open
+
+    @property
+    def high(self):
+        return self._high
+
+    @property
+    def low(self):
+        return self._low
+
+    @property
+    def close(self):
+        return self._close
+
+    @property
+    def volume(self):
+        return self._volume
 
     @property
     def extra_columns(self):
-        return self.extra
+        return self._extra
 
 
 class Bars(object):
@@ -118,7 +125,7 @@ class Bars(object):
         first_instrument = None
         for instrument, current_bar in bar_dict.iteritems():
             if first_trade_date is None:
-                first_trade_date = current_bar.datetime
+                first_trade_date = current_bar.date_time
                 first_instrument = instrument
             elif current_bar.datetime != first_trade_date:
                 raise Exception("Bar data times are not in sync. %s %s != %s %s" % (
@@ -154,11 +161,10 @@ class Bars(object):
         return self.bar_dict.keys()
 
     @property
-    def datetime(self):
+    def date_time(self):
         """Returns the :class:`datetime.datetime` for this set of bars."""
         return self.trade_date
 
     def get_bar(self, instrument):
         """Returns the :class:`BasicBar` for the given instrument or None if the instrument is not found."""
         return self.bar_dict.get(instrument, None)
-

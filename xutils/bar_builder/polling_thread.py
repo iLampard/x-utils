@@ -5,7 +5,9 @@ from collections import deque
 from threading import Thread
 from datetime import datetime as dt
 import time
-from xutils.date_utils import as_utc
+import pytz
+from xutils.date_utils import (localize,
+                               as_utc)
 from xutils.bar_builder.resamplebase import build_range
 from xutils.bar_builder.bar_utils import build_bar
 from xutils.bar_builder.bar import Bars
@@ -13,6 +15,11 @@ from xutils.bar_builder.bar import Bars
 
 def utcnow():
     return as_utc(dt.utcnow())
+
+
+def to_cn_market_time(date_time):
+    time_zone = pytz.timezone('Asia/Shanghai')
+    return localize(date_time, time_zone)
 
 
 class MarketSeries(object):
@@ -44,28 +51,25 @@ class MarketSeries(object):
     def date_time(self):
         return self.datetime_series
 
-    def append(self, data_row):
-        self.price_series.append(data_row[0])
-        self.volume_series.append(data_row[1])
-        self.amount_series.append(data_row[2])
-        self.datetime_series.append(data_row[3])
+    def append(self, price, volume, amount, date_time):
+        self.price_series.append(price)
+        self.volume_series.append(volume)
+        self.amount_series.append(amount)
+        self.datetime_series.append(date_time)
 
     def is_empty(self):
         return len(self.price_series) == 0
 
 
 class PollingThread(Thread):
-    def __init__(self, tickers, live_quote_arg_func, inquery_period=3):
+    def __init__(self, tickers, inquery_period):
         super(PollingThread, self).__init__()
         self.tickers = tickers
         self.ticker_dict = {}
-        self.last_quote_time = {}
-        self.live_quote_arg_func = live_quote_arg_func
         self.inquery_period = inquery_period
 
         for ticker in tickers:
             self.ticker_dict[ticker] = MarketSeries()
-            self.last_quote_time[ticker] = None
 
         self._stopped = False
 
@@ -86,13 +90,10 @@ class PollingThread(Thread):
                 time.sleep(self.inquery_period - time_diff)
 
     def load_data(self):
-        try:
-            df = self.live_quote_arg_func(self.tickers)
-            for index, ticker in enumerate(self.tickers):
-                ticker_info = df.loc[index]
-                self.ticker_dict[ticker].append(ticker_info)
-        except Exception:
-            raise ValueError('Polling thread exception')
+        raise NotImplementedError
+
+    def build_bar(self, date_time, ticker_info):
+        raise NotImplementedError
 
     def get_next_call_date_time(self):
         raise NotImplementedError
@@ -118,10 +119,11 @@ class PollingThread(Thread):
 
 class BarThread(PollingThread):
     def __init__(self, tickers, inquery_period, frequency, queue, live_quote_arg_func, **kwargs):
-        super(BarThread, self).__init__(tickers, live_quote_arg_func, inquery_period)
+        super(BarThread, self).__init__(tickers, inquery_period)
         self.queue = queue
         self.frequency = frequency
         self.next_bar_close = None
+        self.live_quote_arg_func = live_quote_arg_func
         self.on_bar_event = kwargs.get('on_bar_event', 1)
         self._update_next_bar_close()
 
@@ -138,8 +140,23 @@ class BarThread(PollingThread):
 
         for ticker in self.tickers:
             if not self.ticker_dict[ticker].is_empty():
-                bar_dict[ticker] = build_bar(end_time, self.ticker_dict[ticker])
+                bar_dict[ticker] = build_bar(to_cn_market_time(end_time), self.ticker_dict[ticker])
 
         if len(bar_dict):
             bars = Bars(bar_dict)
             self.queue.put((self.on_bar_event, bars))
+
+    def load_data(self):
+        """
+        Overwrite this for new source data structures
+        """
+        try:
+            df = self.live_quote_arg_func(self.tickers)
+            for index, ticker in enumerate(self.tickers):
+                ticker_info = df.loc[index]
+                self.ticker_dict[ticker].append(ticker_info['price'],
+                                                ticker_info['volume'],
+                                                ticker_info['amount'],
+                                                ticker_info['time'])
+        except Exception:
+            raise ValueError('Polling thread exception')
