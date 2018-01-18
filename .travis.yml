@@ -25,7 +25,7 @@ install:
   - conda install toolz
   - conda install numpy
   - conda install matplotlib
-  - pip instal argcheck
+  - pip install argcheck
   - pip install parameterized
   - pip install coveralls
 # command to run tests
