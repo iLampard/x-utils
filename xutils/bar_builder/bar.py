@@ -2,6 +2,7 @@
 
 # ref: https://github.com/Yam-cn/pyalgotrade-cn/blob/master/pyalgotrade/cn/bar.py
 
+import six
 
 class BarFrequency(object):
     """Enum like class for bar frequencies. Valid values are:
@@ -123,7 +124,7 @@ class Bars(object):
         # Check that bar datetimes are in sync
         first_trade_date = None
         first_instrument = None
-        for instrument, current_bar in bar_dict.iteritems():
+        for instrument, current_bar in six.iteritems(bar_dict):
             if first_trade_date is None:
                 first_trade_date = current_bar.date_time
                 first_instrument = instrument

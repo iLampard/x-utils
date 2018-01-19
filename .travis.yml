@@ -25,7 +25,6 @@ install:
   - conda install toolz
   - conda install numpy
   - conda install matplotlib
-  - pip install Queue
   - pip install argcheck
   - pip install parameterized
   - pip install coveralls

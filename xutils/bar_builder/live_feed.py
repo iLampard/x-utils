@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
-
-from Queue import (Empty,
-                   Queue)
+try:
+    from Queue import (Empty,
+                       Queue)
+except ImportError:
+    from queue import (Empty,
+                       Queue)
 from argcheck import *
 from xutils.bar_builder.polling_thread import BarThread
 
