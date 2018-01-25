@@ -21,7 +21,8 @@ else:
     unicode_type = unicode  # noqa
     basestring_type = basestring  # noqa
 
-__all__ = ['to_unicode']
+__all__ = ['to_unicode',
+           'combinations']
 
 
 _TO_UNICODE_TYPES = (unicode_type, type(None))
