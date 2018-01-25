@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import json
-from socket import socket
+import socket
 from xutils.job_runner.job import JobBase
 from xutils.custom_logger import CustomLogger
 from xutils.decorators import handle_exception
