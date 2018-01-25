@@ -1,0 +1,13 @@
+
+
+open_app:
+  name: 远程任务
+  remote_ip: 10.180.90.11
+  remote_port: 43218
+  remote_pc_desc: 工作用机。
+  notes: 打开软件。
+  params:
+    msg:
+      msg_type: run_py
+      task_group: 1
+  finish_exit: True
