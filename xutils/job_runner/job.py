@@ -7,9 +7,8 @@ import socket
 # ref: https://github.com/Nextdoor/ndscheduler/blob/master/ndscheduler/job.py
 
 class JobBase(object):
-    def __init__(self, job_id, execution_id):
-        self.job_id = job_id
-        self.execution_id = execution_id
+    def __init__(self):
+        pass
 
     @classmethod
     def create_test_instance(cls):

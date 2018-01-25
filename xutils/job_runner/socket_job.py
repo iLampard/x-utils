@@ -18,8 +18,8 @@ socket_logger = CustomLogger('SocketLogger')
 
 
 class SocketJob(JobBase):
-    def __init__(self, job_id, execution_id, job_config='socket_job.yaml'):
-        super(SocketJob, self).__init__(job_id, execution_id)
+    def __init__(self, job_config='socket_job.yaml'):
+        super(SocketJob, self).__init__()
         self.job_config = job_config
 
     @classmethod
