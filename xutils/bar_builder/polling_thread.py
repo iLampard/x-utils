@@ -4,6 +4,7 @@
 from collections import deque
 from threading import Thread
 from datetime import datetime as dt
+import datetime
 import time
 import pytz
 from xutils.date_utils import (localize,
@@ -130,6 +131,13 @@ class BarThread(PollingThread):
     def _update_next_bar_close(self):
         self.next_bar_close = build_range(utcnow(), self.frequency).ending
 
+    # 检查是否为交易时间
+    @staticmethod
+    def _is_trade_time(dt_to_check):
+        b = ((dt_to_check >= datetime.time(9, 30, 0)) & (dt_to_check <= datetime.time(11, 30, 0))) | \
+            (dt_to_check >= datetime.time(13, 0, 0)) | (dt_to_check <= datetime.time(15, 0, 0))
+        return b
+
     def get_next_call_date_time(self):
         return self.next_bar_close
 
@@ -137,10 +145,13 @@ class BarThread(PollingThread):
         end_time = self.next_bar_close
         self._update_next_bar_close()
         bar_dict = {}
+        local_end_time = to_cn_market_time(end_time)
+        if not self._is_trade_time(local_end_time.time()):
+            return
 
         for ticker in self.tickers:
             if not self.ticker_dict[ticker].is_empty():
-                bar_dict[ticker] = build_bar(to_cn_market_time(end_time), self.ticker_dict[ticker])
+                bar_dict[ticker] = build_bar(local_end_time, self.ticker_dict[ticker])
 
         if len(bar_dict):
             bars = Bars(bar_dict)
