@@ -28,6 +28,11 @@ from xutils.misc import valid_dict
 from xutils.bar_builder import (BarThread,
                                 BarFrequency,
                                 LiveFeed)
+from xutils.job_runner import (SocketJob,
+                               server_setup,
+                               server_watch,
+                               enum_windows_callback,
+                               get_window_info)
 
 __all__ = ['LogFormatter',
            'CustomLogger',
@@ -55,7 +60,12 @@ __all__ = ['LogFormatter',
            'valid_dict',
            'BarThread',
            'BarFrequency',
-           'LiveFeed'
+           'LiveFeed',
+           'SocketJob',
+           'server_watch',
+           'server_setup',
+           'enum_windows_callback',
+           'get_window_info'
            ]
 
-__version__ = '0.4.3'
+__version__ = '0.4.4'
