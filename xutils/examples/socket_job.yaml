@@ -1,13 +1,13 @@
 
 
-open_app:
-  name: 远程任务
-  remote_ip: 10.180.90.11
+remote_job_1:
+  name: remote job
+  remote_ip: 10.180.90.18
   remote_port: 43218
-  remote_pc_desc: 工作用机。
-  notes: 打开软件。
+  remote_pc_desc: Local PC
+  notes: open outlook
   params:
     msg:
       msg_type: run_py
-      task_group: 1
+      task_group: 2
   finish_exit: True
