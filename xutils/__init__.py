@@ -69,4 +69,4 @@ __all__ = ['LogFormatter',
            'get_window_info',
            'dual_thrust']
 
-__version__ = '0.4.6'
+__version__ = '0.4.7'
