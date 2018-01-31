@@ -33,6 +33,7 @@ from xutils.job_runner import (SocketJob,
                                server_watch,
                                enum_windows_callback,
                                get_window_info)
+from xutils.indicator import dual_thrust
 
 __all__ = ['LogFormatter',
            'CustomLogger',
@@ -65,7 +66,7 @@ __all__ = ['LogFormatter',
            'server_watch',
            'server_setup',
            'enum_windows_callback',
-           'get_window_info'
-           ]
+           'get_window_info',
+           'dual_thrust']
 
-__version__ = '0.4.4'
+__version__ = '0.4.5'
