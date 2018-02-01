@@ -70,4 +70,4 @@ __all__ = ['version',
            'get_window_info',
            'dual_thrust']
 
-version = '0.4.8'
+version = '0.4.9'
