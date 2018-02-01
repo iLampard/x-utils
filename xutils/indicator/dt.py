@@ -34,6 +34,6 @@ def dual_thrust(open_price, low_series, high_series, close_series, **kwargs):
     down_max_high = np.max(high_series[-down_length:])
 
     up_thurst = open_price + up_coeff * max(up_max_close - up_min_low, up_max_high - up_min_close)
-    down_thrust = open_price + down_coeff * max(down_max_close - down_min_low, down_max_high - down_min_close)
+    down_thrust = open_price - down_coeff * max(down_max_close - down_min_low, down_max_high - down_min_close)
 
     return up_thurst, down_thrust

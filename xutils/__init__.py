@@ -35,7 +35,8 @@ from xutils.job_runner import (SocketJob,
                                get_window_info)
 from xutils.indicator import dual_thrust
 
-__all__ = ['LogFormatter',
+__all__ = ['version',
+           'LogFormatter',
            'CustomLogger',
            'to_unicode',
            'combinations',
@@ -69,4 +70,4 @@ __all__ = ['LogFormatter',
            'get_window_info',
            'dual_thrust']
 
-__version__ = '0.4.7'
+version = '0.4.8'
