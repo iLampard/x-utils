@@ -50,7 +50,6 @@ __all__ = ['version',
            'Date',
            'Period',
            'Calendar',
-           'is_tradetime_now',
            'Schedule',
            'is_within_hour_range',
            'TimeUnits',
@@ -71,4 +70,4 @@ __all__ = ['version',
            'dual_thrust',
            'is_tradetime_now']
 
-version = '0.5.1'
+version = '0.5.2'
