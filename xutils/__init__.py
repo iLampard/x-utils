@@ -10,12 +10,12 @@ from xutils.test_runner import (add_parent_path,
 from xutils.decorators import handle_exception
 from xutils.config_utils import (find_file,
                                  find_and_parse_config)
-from xutils.plot_utils import radar_factory
 from xutils.assert_utils import (py_assert,
                                  py_warning)
 from xutils.date_utils import (Date,
                                Period,
                                Calendar,
+                               is_tradetime_now,
                                Schedule,
                                is_within_hour_range,
                                TimeUnits,
@@ -45,12 +45,12 @@ __all__ = ['version',
            'handle_exception',
            'find_file',
            'find_and_parse_config',
-           'radar_factory',
            'py_assert',
            'py_warning',
            'Date',
            'Period',
            'Calendar',
+           'is_tradetime_now',
            'Schedule',
            'is_within_hour_range',
            'TimeUnits',
@@ -68,6 +68,7 @@ __all__ = ['version',
            'server_setup',
            'enum_windows_callback',
            'get_window_info',
-           'dual_thrust']
+           'dual_thrust',
+           'is_tradetime_now']
 
-version = '0.4.9'
+version = '0.5.1'

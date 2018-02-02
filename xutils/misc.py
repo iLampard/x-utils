@@ -15,7 +15,7 @@ def valid_dict(d, keys=None):
     if keys is None:
         d_ = d
     else:
-        d_ = itemfilter(lambda item: item[0] in keys,  d)
+        d_ = itemfilter(lambda item: item[0] in keys, d)
         if len(d_) != len(keys):
             return False
     values = list(itervalues(d_))

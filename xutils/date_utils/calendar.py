@@ -8,6 +8,7 @@ from xutils.date_utils.enums import (TimeUnits,
 from xutils.date_utils.date import Date
 from xutils.date_utils.period import Period
 from xutils.assert_utils import py_assert
+import time
 
 
 class Calendar(object):
@@ -65,7 +66,7 @@ class Calendar(object):
         d1 = d
 
         if c == BizDayConventions.Following or c == BizDayConventions.ModifiedFollowing or \
-                        c == BizDayConventions.HalfMonthModifiedFollowing:
+                c == BizDayConventions.HalfMonthModifiedFollowing:
             while self.isHoliday(d1):
                 d1 += 1
             if c == BizDayConventions.ModifiedFollowing or c == BizDayConventions.HalfMonthModifiedFollowing:
@@ -657,13 +658,13 @@ class TargetImpl(WestenImpl):
         em = self.easterMonday(y)
 
         if (self.isWeekEnd(w)
-            or (d == 1 and m == Months.January)
-            or (dd == em - 3 and y >= 2000)
-            or (dd == em and y >= 2000)
-            or (d == 1 and m == Months.May and y >= 2000)
-            or (d == 25 and m == Months.December)
-            or (d == 26 and m == Months.December and y >= 2000)
-            or (d == 31 and m == Months.December and (y == 1998 or y == 1999 or y == 2001))):
+                or (d == 1 and m == Months.January)
+                or (dd == em - 3 and y >= 2000)
+                or (dd == em and y >= 2000)
+                or (d == 1 and m == Months.May and y >= 2000)
+                or (d == 25 and m == Months.December)
+                or (d == 26 and m == Months.December and y >= 2000)
+                or (d == 31 and m == Months.December and (y == 1998 or y == 1999 or y == 2001))):
             return False
         return True
 
@@ -677,3 +678,19 @@ _holDict = {'china.sse': ChinaSseImpl,
             'target': TargetImpl,
             'null': NullCalendar,
             'nullcalendar': NullCalendar}
+
+
+def is_tradetime_now():
+    """
+    判断目前是不是交易时间, 同时考虑节假日
+    :return: bool
+    """
+    cal = Calendar('china.sse')
+    now_time = time.localtime()
+    today = Date(now_time[0], now_time[1], now_time[2])
+    if cal.isBizDay(today):
+        return False
+    now = (now_time.tm_hour, now_time.tm_min, now_time.tm_sec)
+    if (9, 15, 0) <= now <= (11, 30, 0) or (13, 0, 0) <= now <= (15, 0, 0):
+        return True
+    return False

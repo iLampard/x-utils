@@ -10,7 +10,6 @@ from xutils.bar_builder.polling_thread import BarThread
 
 
 class LiveFeed(object):
-    @expect_types(tickers=list)
     def __init__(self, tickers, frequency, live_quote_arg_func, **kwargs):
         self.tickers = tickers
         self.frequency = frequency
