@@ -49,5 +49,11 @@ class DatetimeConverter(object):
             ret = localize(ret, pytz.utc)
         return ret
 
+    @classmethod
+    def date_str_convert(cls, ds, in_format='%Y-%m-%d', out_format='%Y%m%d'):
+        struct_date = datetime.datetime.strptime(ds, in_format)
+        str_date = struct_date.strftime(out_format)
+        return str_date, struct_date
+
 
 epoch_utc = as_utc(datetime.datetime(1970, 1, 1))
