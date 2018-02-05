@@ -688,7 +688,7 @@ def is_tradetime_now():
     cal = Calendar('china.sse')
     now_time = time.localtime()
     today = Date(now_time[0], now_time[1], now_time[2])
-    if cal.isBizDay(today):
+    if not cal.isBizDay(today):
         return False
     now = (now_time.tm_hour, now_time.tm_min, now_time.tm_sec)
     if (9, 15, 0) <= now <= (11, 30, 0) or (13, 0, 0) <= now <= (15, 0, 0):
