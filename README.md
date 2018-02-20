@@ -60,32 +60,32 @@ from xutils import (Date,
 current_date = Date(2015, 7, 24)
 
 # Date对象的字符串表示
-str(current_date)  
->>>'2015-07-24'
+>>> str(current_date)
+'2015-07-24'
 
 # 也可以直接传递5位数的序列号初始化Date对象
 current_date_2 = Date(serial_number=current_date.serialNumber)
-str(current_date_2)  
->>>'2015-07-24'
+>>> str(current_date_2)
+'2015-07-24'
 
 # Date对象转换成datetime对象
-current_date.toDateTime()  
->>>dt.datetime(2015, 7, 24)
+>>> current_date.toDateTime()
+dt.datetime(2015, 7, 24)
 
 # datetime对象转换成Date对象
-current_date = Date.fromDatetime(dt.datetime(2015, 7, 24))
->>>Date(2015, 7, 24)
+>>> current_date = Date.fromDatetime(dt.datetime(2015, 7, 24))
+Date(2015, 7, 24)
 
 # Date对象转换成制定格式的str格式
-current_date.strftime("%Y/%m/%d") 
->>>'2015/07/24'
-current_date.strftime("%Y%m%d") 
->>>'20150724'
+>>> current_date.strftime("%Y/%m/%d")
+'2015/07/24'
+>>> current_date.strftime("%Y%m%d")
+'20150724'
 
 # 从字符串初始化成Date对象
 Date.parseISO('2016-01-15')
-Date.strptime('20160115', '%Y%m%d')
->>>Date(2016, 1, 15)
+>>> Date.strptime('20160115', '%Y%m%d')
+Date(2016, 1, 15)
 
 # 日期的加减 (不考虑交易日的情况)
 # 一个月后的日期
@@ -125,12 +125,12 @@ cal.isEndOfMonth(current_date)  # False
 current_date = Date(2014, 1, 31)
 
 # 当前日往前推五个交易日
-cal.advanceDate(current_date, Period('-5b'))  
->>>Date(2014, 1, 24)
+>>> cal.advanceDate(current_date, Period('-5b'))
+Date(2014, 1, 24)
 
 # 当前日往后推4个月
-cal.advanceDate(current_date, Period('4m')) 
->>>Date(2014, 6, 3)
+>>> cal.advanceDate(current_date, Period('4m'))
+Date(2014, 6, 3)
 
 
 ```
@@ -155,7 +155,8 @@ s = Schedule(start_date,
              Period(length=1, units=TimeUnits.Days),
              Calendar('China.SSE'),
              BizDayConventions.Preceding)
->>>
+
+
 [Date(2011, 12, 30), Date(2012, 1, 4), Date(2012, 1, 5), Date(2012, 1, 6), Date(2012, 1, 9)]
 
 ```
@@ -199,8 +200,8 @@ def test_calc():
     return
 
 
-test_calc()
->>>
+>>> test_calc()
+
 [2017-09-06 14:57:38 - TestLogger - INFO] - function test_calc used : 0.00600004196167 s
 ```
 
@@ -272,9 +273,9 @@ if __name__ == '__main__':
 ```python
 
 # xutils/tests/test_config_utils.py
-find_path = find_file(target_file='config_utils.py')
+>>> find_path = find_file(target_file='config_utils.py')
 
->>> 'xutils\\config_utils.py'
+'xutils\\config_utils.py'
 
 
 ```
@@ -284,9 +285,24 @@ find_path = find_file(target_file='config_utils.py')
 ```python
 
 # xutils/tests/test_config_utils.py
-find_and_parse_config('config.yaml')
+>>> find_and_parse_config('config.yaml')
 
->>> {'a': 1, 'b': 2, 'c': 3}
+{'a': 1, 'b': 2, 'c': 3}
+
+
+```
+
+##### socket 客户端和服务器
+
+封装了一个客户端，同时可以在相同根目录下定义一个yaml配置文件，针对每一个客户请求（此处称为socketjob）预设置好参数，如remote_host,
+remote_ip等，保持代码简洁（见[SocketJobExample](https://github.com/iLampard/x-utils/blob/master/xutils/examples/socket_job.py)）
+
+```python
+
+from xutils.job_runner import SocketJob
+
+socket_job = SocketJob(job_config='socket_job.yaml')
+socket_job.run('remote_job_1')
 
 
 ```
