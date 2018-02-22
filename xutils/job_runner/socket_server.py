@@ -58,4 +58,8 @@ def server_watch(server, logger, **kwargs):
                                             'extra_param': param_json_str})
 
                 logger.info(command)
-                os.system(command)
+                try:
+                    os.system(command)
+                except Exception as e:
+                    logger.info(e)
+                    pass
