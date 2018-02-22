@@ -70,4 +70,4 @@ __all__ = ['version',
            'dual_thrust',
            'is_tradetime_now']
 
-version = '0.5.5'
+version = '0.5.6'
