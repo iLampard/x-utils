@@ -2,6 +2,7 @@
 
 from time import (mktime,
                   strptime)
+import datetime as dt
 
 
 def is_within_hour_range(ref_time, start_time, end_time):
@@ -21,3 +22,7 @@ def is_within_hour_range(ref_time, start_time, end_time):
         return False
 
 
+def today_date(out_format='%Y%m%d'):
+    today = dt.date.today()
+    str_date = today.strftime(out_format)
+    return str_date

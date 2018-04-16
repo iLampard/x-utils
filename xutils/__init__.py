@@ -16,6 +16,7 @@ from xutils.date_utils import (Date,
                                Period,
                                Calendar,
                                is_tradetime_now,
+                               today_date,
                                Schedule,
                                is_within_hour_range,
                                TimeUnits,
@@ -51,6 +52,7 @@ __all__ = ['version',
            'Period',
            'Calendar',
            'Schedule',
+           'today_date',
            'is_within_hour_range',
            'TimeUnits',
            'NormalizingType',
@@ -70,4 +72,4 @@ __all__ = ['version',
            'dual_thrust',
            'is_tradetime_now']
 
-version = '0.5.6'
+version = '0.5.7'

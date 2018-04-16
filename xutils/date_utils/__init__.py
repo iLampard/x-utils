@@ -5,7 +5,8 @@ from xutils.date_utils.period import Period
 from xutils.date_utils.calendar import (Calendar,
                                         is_tradetime_now)
 from xutils.date_utils.schedule import Schedule
-from xutils.date_utils.misc import is_within_hour_range
+from xutils.date_utils.misc import (is_within_hour_range,
+                                    today_date)
 from xutils.date_utils.enums import (TimeUnits,
                                      NormalizingType,
                                      DateGeneration,
@@ -21,6 +22,7 @@ __all__ = ['Date',
            'Period',
            'Calendar',
            'is_tradetime_now',
+           'today_date',
            'Schedule',
            'is_within_hour_range',
            'TimeUnits',
